@@ -1,0 +1,57 @@
+// Pruebas de la sección 5.4 sobre el modelo ModaEstilo_BI (ejecutar en DAX Studio o en la vista de consultas DAX).
+// Cada bloque separado por "// NEXT" es una consulta independiente.
+// Resultados en resultados/Resultados_Pruebas_5_4_PowerBI.txt.
+
+// T-05. Filas cargadas por tabla
+EVALUATE ROW(
+ "DimFecha", COUNTROWS(DimFecha), "DimArticulo", COUNTROWS(DimArticulo), "DimTrabajador", COUNTROWS(DimTrabajador),
+ "DimCliente", COUNTROWS(DimCliente), "FactVenta", COUNTROWS(FactVenta), "FactAlquiler", COUNTROWS(FactAlquiler),
+ "FactPenalidad", COUNTROWS(FactPenalidad), "FactGasto", COUNTROWS(FactGasto), "FactPago", COUNTROWS(FactPago))
+// NEXT
+// T-06. Relaciones del modelo: activas, muchos a uno (2 -> 1) y filtro en una dirección (1)
+SELECT [FromTableID], [FromColumnID], [ToTableID], [ToColumnID], [IsActive], [FromCardinality], [ToCardinality], [CrossFilteringBehavior]
+FROM $SYSTEM.TMSCHEMA_RELATIONSHIPS
+// NEXT
+// T-07. Indicadores globales (Q1)
+EVALUATE ROW(
+ "Ingreso Total", [Ingreso Total], "Ingreso Ventas", [Ingreso Ventas], "Ingreso Alquileres", [Ingreso Alquileres],
+ "Operaciones", [Número de Operaciones], "Ticket", [Ticket Promedio], "Gastos", [Gastos Totales],
+ "Cobros", [Cobros Confirmados], "Penalidades", [Monto Penalidades])
+// NEXT
+// T-08. Indicadores de ventas (Q1)
+EVALUATE ROW(
+ "NVentas", [Número de Ventas], "Unidades", [Unidades Vendidas], "TicketVenta", [Ticket Promedio Venta],
+ "Margen", [Margen Bruto Ventas], "PctMargen", [% Margen Bruto], "StockCritico", [Artículos en Stock Crítico])
+// NEXT
+// T-09. Ingresos por categoría (Q2)
+EVALUATE SUMMARIZECOLUMNS(DimArticulo[Categoria], "Ventas", [Ingreso Ventas], "Alquileres", [Ingreso Alquileres])
+// NEXT
+// T-09. Ingresos y operaciones por año (Q3)
+EVALUATE SUMMARIZECOLUMNS(DimFecha[Anio], "Ventas", [Ingreso Ventas], "Alquileres", [Ingreso Alquileres], "NV", [Número de Ventas], "NA", [Número de Alquileres])
+// NEXT
+// T-10. Alquileres y devoluciones (Q4)
+EVALUATE ROW(
+ "NAlquileres", [Número de Alquileres], "Pendientes", [Alquileres Pendientes], "Devueltos", [Alquileres Devueltos],
+ "Tasa", [Tasa de Devolución], "ConRetraso", [Devoluciones con Retraso], "PctRetraso", [% Devoluciones con Retraso])
+// NEXT
+// T-14. Columnas con datos personales cargadas en el modelo (esperado: ninguna)
+SELECT [TableID], [ExplicitName] FROM $SYSTEM.TMSCHEMA_COLUMNS
+WHERE [ExplicitName] = 'DNI' OR [ExplicitName] = 'Nombres' OR [ExplicitName] = 'Apellidos' OR [ExplicitName] = 'Cliente'
+   OR [ExplicitName] = 'Telefono' OR [ExplicitName] = 'Correo' OR [ExplicitName] = 'Direccion'
+// NEXT
+// T-14. Columnas de DimCliente en el modelo
+SELECT [ExplicitName], [IsHidden] FROM $SYSTEM.TMSCHEMA_COLUMNS WHERE [TableID] = 19
+// NEXT
+// T-17. Segmentador Año = 2025 (comparar con Q3)
+EVALUATE CALCULATETABLE(ROW("Ventas", [Ingreso Ventas], "Alquileres", [Ingreso Alquileres],
+ "NV", [Número de Ventas], "NA", [Número de Alquileres], "Gastos", [Gastos Totales]), DimFecha[Anio] = 2025)
+// NEXT
+// T-17. Segmentadores Año = 2025 y Categoría = Ternos
+EVALUATE CALCULATETABLE(ROW("Ventas", [Ingreso Ventas], "Alquileres", [Ingreso Alquileres],
+ "NV", [Número de Ventas], "NA", [Número de Alquileres]), DimFecha[Anio] = 2025, DimArticulo[Categoria] = "Ternos")
+// NEXT
+// T-17. Visual más pesado: ingresos por mes (34 meses x 2 medidas)
+EVALUATE SUMMARIZECOLUMNS(DimFecha[AnioMes], "Ventas", [Ingreso Ventas], "Alquileres", [Ingreso Alquileres])
+// NEXT
+// T-17. Top 10 de artículos con filtro de año 2025
+EVALUATE CALCULATETABLE(FILTER(SUMMARIZECOLUMNS(DimArticulo[Articulo], "Top", [Unidades Vendidas Top 10]), NOT ISBLANK([Top])), DimFecha[Anio] = 2025)

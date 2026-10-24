@@ -1,0 +1,143 @@
+﻿Pruebas de la seccion 5.4 sobre el modelo de Power BI
+Ejecucion: 2026-10-23 21:28:21 -05:00 | Power BI Desktop 2.159.883.0 (64 bits) | Modelo: powerbi/ModaEstilo_BI | Consultas: powerbi/Pruebas_5_4.dax
+Cada consulta se ejecuto 3 veces; se registra la primera y el promedio de las dos siguientes.
+
+// T-05. Filas cargadas por tabla
+Tiempo (ms): 1.a ejecucion 34.3; promedio 2.a-3.a 2.4
+[DimFecha] | [DimArticulo] | [DimTrabajador] | [DimCliente] | [FactVenta] | [FactAlquiler] | [FactPenalidad] | [FactGasto] | [FactPago]
+1096 | 46 | 7 | 90 | 323 | 378 | 102 | 137 | 566
+
+// T-06. Relaciones del modelo: activas, muchos a uno (2 -> 1) y filtro en una dirección (1)
+Tiempo (ms): 1.a ejecucion 3.0; promedio 2.a-3.a 1.5
+FromTableID | FromColumnID | ToTableID | ToColumnID | IsActive | FromCardinality | ToCardinality | CrossFilteringBehavior
+22 | 77 | 10 | 53 | True | 2 | 1 | 1
+22 | 78 | 13 | 60 | True | 2 | 1 | 1
+22 | 79 | 19 | 73 | True | 2 | 1 | 1
+22 | 80 | 16 | 70 | True | 2 | 1 | 1
+25 | 91 | 10 | 53 | True | 2 | 1 | 1
+25 | 92 | 13 | 60 | True | 2 | 1 | 1
+25 | 93 | 19 | 73 | True | 2 | 1 | 1
+25 | 94 | 16 | 70 | True | 2 | 1 | 1
+28 | 105 | 10 | 53 | True | 2 | 1 | 1
+28 | 106 | 13 | 60 | True | 2 | 1 | 1
+28 | 107 | 19 | 73 | True | 2 | 1 | 1
+28 | 108 | 16 | 70 | True | 2 | 1 | 1
+31 | 114 | 10 | 53 | True | 2 | 1 | 1
+34 | 118 | 10 | 53 | True | 2 | 1 | 1
+34 | 119 | 19 | 73 | True | 2 | 1 | 1
+34 | 120 | 16 | 70 | True | 2 | 1 | 1
+
+// T-07. Indicadores globales (Q1)
+Tiempo (ms): 1.a ejecucion 4.9; promedio 2.a-3.a 3.7
+[Ingreso Total] | [Ingreso Ventas] | [Ingreso Alquileres] | [Operaciones] | [Ticket] | [Gastos] | [Cobros] | [Penalidades]
+136915.7 | 92784.7 | 44131 | 425 | 322.1546 | 37635 | 140326.14 | 6080
+
+// T-08. Indicadores de ventas (Q1)
+Tiempo (ms): 1.a ejecucion 3.3; promedio 2.a-3.a 2.7
+[NVentas] | [Unidades] | [TicketVenta] | [Margen] | [PctMargen] | [StockCritico]
+185 | 360 | 501.5389 | 47069.7 | 0.50730023376699 | 0
+
+// T-09. Ingresos por categoría (Q2)
+Tiempo (ms): 1.a ejecucion 2.3; promedio 2.a-3.a 2.2
+DimArticulo[Categoria] | [Ventas] | [Alquileres]
+Ternos | 28086 | 16734.25
+Vestidos | 15321.5 | 16348.75
+Camisas | 4428 | 158
+Blazers y sacos | 6977.75 | 1438.75
+Pantalones | 7307.75 | 163
+Accesorios | 3652.95 | 123
+Calzado | 9454 | 1319.75
+Trajes infantiles | 3980.25 | 3389
+Conjuntos femeninos | 13576.5 | 4456.5
+
+// T-09. Ingresos y operaciones por año (Q3)
+Tiempo (ms): 1.a ejecucion 3.0; promedio 2.a-3.a 3.0
+DimFecha[Anio] | [Ventas] | [Alquileres] | [NV] | [NA]
+2024 | 30605.75 | 11545 | 60 | 70
+2025 | 34270.25 | 17175.5 | 70 | 88
+2026 | 27908.7 | 15410.5 | 55 | 82
+
+// T-10. Alquileres y devoluciones (Q4)
+Tiempo (ms): 1.a ejecucion 2.7; promedio 2.a-3.a 2.8
+[NAlquileres] | [Pendientes] | [Devueltos] | [Tasa] | [ConRetraso] | [PctRetraso]
+240 | 10 | 230 | 0.958333333333333 | 53 | 0.230434782608696
+
+// T-14. Columnas con datos personales cargadas en el modelo (esperado: ninguna)
+Tiempo (ms): 1.a ejecucion 1.1; promedio 2.a-3.a 1.1
+TableID | ExplicitName
+
+// T-14. Columnas de DimCliente en el modelo
+Tiempo (ms): 1.a ejecucion 0.9; promedio 2.a-3.a 1.0
+ExplicitName | IsHidden
+RowNumber-2662979B-1795-4F74-8F37-6A1BA8059B61 | True
+ClienteKey | True
+Distrito | False
+
+// T-17. Segmentador Año = 2025 (comparar con Q3)
+Tiempo (ms): 1.a ejecucion 3.3; promedio 2.a-3.a 3.5
+[Ventas] | [Alquileres] | [NV] | [NA] | [Gastos]
+34270.25 | 17175.5 | 70 | 88 | 13270
+
+// T-17. Segmentadores Año = 2025 y Categoría = Ternos
+Tiempo (ms): 1.a ejecucion 3.8; promedio 2.a-3.a 3.5
+[Ventas] | [Alquileres] | [NV] | [NA]
+10629 | 6222.25 | 19 | 35
+
+// T-17. Visual más pesado: ingresos por mes (34 meses x 2 medidas)
+Tiempo (ms): 1.a ejecucion 3.2; promedio 2.a-3.a 3.2
+DimFecha[AnioMes] | [Ventas] | [Alquileres]
+2024-01 | 1738 | 843.5
+2024-02 | 2128.25 | 845.75
+2024-03 | 5164.5 | 789.5
+2024-04 | 3359 | 732.25
+2024-05 | 1702.5 | 1531
+2024-06 | 1091.75 | 1130.25
+2024-07 | 1990.5 | 1307.75
+2024-08 | 2341.85 | 734.25
+2024-09 | 2571.1 | 1997.75
+2024-10 | 3476.25 | 525
+2024-11 | 3572.3 | 723.25
+2024-12 | 1469.75 | 384.75
+2025-01 | 2976.15 | 1656.75
+2025-02 | 3863 | 1092
+2025-03 | 3607 | 835
+2025-04 | 2556.75 | 1193.5
+2025-05 | 3394 | 1405.75
+2025-06 | 5430.5 | 967.25
+2025-07 | 2959 | 1323.25
+2025-08 | 2148.5 | 1674.25
+2025-09 | 1465 | 1795
+2025-10 | 3264.35 | 2706
+2025-11 | 1126.5 | 1289.75
+2025-12 | 1479.5 | 1237
+2026-01 | 2496.55 | 1508
+2026-02 | 2272.5 | 1931.5
+2026-03 | 2698.35 | 874.25
+2026-04 | 3460.05 | 934.75
+2026-05 | 2303.25 | 1506
+2026-06 | 2481.75 | 1719.5
+2026-07 | 3125.5 | 2081.5
+2026-08 | 2990.75 | 2344
+2026-09 | 2972.25 | 460
+2026-10 | 3107.75 | 2051
+
+// T-17. Top 10 de artículos con filtro de año 2025
+Tiempo (ms): 1.a ejecucion 4.0; promedio 2.a-3.a 3.8
+DimArticulo[Articulo] | [Top]
+Terno clásico slim | 6
+Vestido de gala satinado | 6
+Camisa Oxford premium | 6
+Terno infantil ceremonia | 6
+Camisa cuello italiano | 11
+Blazer de lino | 5
+Corbata de seda | 10
+Set de gemelos | 8
+Tacón de fiesta | 8
+Conjunto blazer y falda | 8
+
+// T-17 (lado SQL). Ano 2025 y categoria Ternos
+VentasTernos2025|AlqTernos2025|NV|NA|Gastos2025
+----------------|-------------|--|--|----------
+10629.00|6222.25|19|35|13270.00
+
+// T-16. Busqueda de credenciales en el repositorio (claves, usuarios SQL o cadenas de conexion con credenciales): 0 coincidencias. Origen de las 9 tablas: Sql.Database("localhost", "ModaEstilo_BI_Demo") con autenticacion de Windows.

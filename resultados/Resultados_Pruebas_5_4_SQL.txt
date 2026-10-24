@@ -1,0 +1,103 @@
+﻿Pruebas de la seccion 5.4 en SQL Server
+Ejecucion: 2026-10-23 21:28:21 -05:00 | Servidor: GIAN_FRANCO (SQL Server 2025 Standard Developer Edition 17.0.1000.7) | Base: ModaEstilo_BI_Demo | Script: database/03_Pruebas_5_4_Calidad_Seguridad.sql
+T-11 y T-15 se ejecutan dentro de una transaccion con ROLLBACK.
+
+Changed database context to 'ModaEstilo_BI_Demo'.
+=== T-01. Filas cargadas por el script 01 (esperado: 9, 7, 90, 46, 185, 323, 240, 378, 230, 102, 137, 566 y 1,096) ===
+Tabla|Filas
+-----|-----
+Categoria|9
+Trabajador|7
+Cliente|90
+Articulo|46
+Venta|185
+DetalleVenta|323
+Alquiler|240
+DetalleAlquiler|378
+Devolucion|230
+Penalidad|102
+Gasto|137
+Pago|566
+DimFecha|1096
+=== T-02. Grano de las vistas de hechos: filas de la vista = filas del origen y 0 claves repetidas ===
+Vista|FilasVista|FilasOrigen|ClavesRepetidas
+-----|----------|-----------|---------------
+bi.FactVenta|323|323|0
+bi.FactAlquiler|378|378|0
+bi.FactPenalidad|102|102|0
+bi.FactGasto|137|137|0
+bi.FactPago|566|566|0
+=== T-03. Regla de puntualidad: FuePuntual = 0 solo si la devolución real es posterior a la programada ===
+FilasPorContrato|Contratos|ConRetraso|Puntuales|SinDevolucion|Contradicciones|RetrasoMinDias|RetrasoMaxDias
+----------------|---------|----------|---------|-------------|---------------|--------------|--------------
+240|240|53|177|10|0|1|4
+ContratosConRetraso|ContratosConMora|RetrasoSinMora|MoraSinRetraso|DiasDistintos
+-------------------|----------------|--------------|--------------|-------------
+53|53|0|0|0
+=== T-04. Fórmulas de los indicadores (Q1) ===
+IngresoVentas|IngresoAlquileres|IngresoTotal|NumeroOperaciones|TicketPromedio|CostoMercaderia|MargenCalculado|MargenVista|TotalCabeceraVentas|TotalCabeceraAlquileres
+-------------|-----------------|------------|-----------------|--------------|---------------|---------------|-----------|-------------------|-----------------------
+92784.70|44131.00|136915.70|425|322.15|45715.00|47069.70|47069.70|92784.70|44131.00
+=== T-05 (lado SQL). Filas por vista (Q5) ===
+Vista|Filas
+-----|-----
+bi.DimCalendario|1096
+bi.DimArticulo|46
+bi.DimTrabajador|7
+bi.DimCliente|90
+bi.FactVenta|323
+bi.FactAlquiler|378
+bi.FactPenalidad|102
+bi.FactGasto|137
+bi.FactPago|566
+=== T-06. Claves de hechos sin fila en su dimensión (esperado: 0 en todas) ===
+Hecho|SinFecha|SinArticulo|SinCliente|SinTrabajador
+-----|--------|-----------|----------|-------------
+FactVenta|0|0|0|0
+FactAlquiler|0|0|0|0
+FactPenalidad|0|0|0|0
+FactGasto|0|NULL|NULL|NULL
+FactPago|0|NULL|0|0
+ClavesForaneasDeclaradas
+------------------------
+17
+=== T-11. Reglas financieras del script (esperado: 0 incumplimientos) ===
+R51001_VentaVsDetalle|R51002_AlquilerVsDetalle|R51003_PagoVenta|R51004_PagoAlquiler|R51005_PagoPenalidad|R51006_Devolucion
+---------------------|------------------------|----------------|-------------------|--------------------|-----------------
+0|0|0|0|0|0
+=== T-11. Caso fallido controlado: se altera un total dentro de una transacción ===
+ErrorDetectado|Mensaje|TotalAntes|TotalDespuesDelRollback|TransaccionesAbiertas
+--------------|-------|----------|-----------------------|---------------------
+51001|Total de venta distinto a suma de sus detalles.|698.00|698.00|0
+=== T-12. Nulos en claves y medidas que usa el modelo ===
+Vista|NulosEnClaves|NulosEnMedidas|NulosJustificados
+-----|-------------|--------------|-----------------
+bi.FactVenta|0|0|NULL
+bi.FactAlquiler|0|0|14
+bi.FactPenalidad|0|0|53
+bi.FactGasto|0|0|NULL
+bi.FactPago|0|0|NULL
+LineasSinDevolucion|ContratosSinDevolucion
+-------------------|----------------------
+14|10
+TipoPenalidad|Filas|SinArticulo
+-------------|-----|-----------
+Limpieza|24|0
+Mora|53|53
+Reparación|25|0
+=== T-13. Rangos, fechas, horarios y duplicados ===
+CantVentaMin|CantVentaMax|CantAlqMin|CantAlqMax|VentasMontoNoPositivo|AlquileresMontoNoPositivo|VentasConMargenNegativo|FechaMinima|FechaMaxima|FueraDeHorario|FechasIlogicas|DniClienteRepetido|ArticuloRepetidoEnVenta|ArticuloRepetidoEnAlquiler
+------------|------------|----------|----------|---------------------|-------------------------|-----------------------|-----------|-----------|--------------|--------------|------------------|-----------------------|--------------------------
+1|3|1|2|0|0|0|2024-01-08 16:10:00|2026-10-15 16:20:00|0|0|0|0|0
+=== T-15. Usuario de solo lectura (db_datareader): SELECT sí, INSERT y DELETE no ===
+Operacion|Resultado
+---------|---------
+SELECT|Permitido: 323 filas leídas
+INSERT|Error 229: The INSERT permission was denied on the object 'Categoria', database 'ModaEstilo_BI_Demo', schema 'dbo'.
+DELETE|Error 229: The DELETE permission was denied on the object 'Gasto', database 'ModaEstilo_BI_Demo', schema 'dbo'.
+UsuarioDePruebaQueQueda
+-----------------------
+0
+CategoriasDespues|GastosDespues
+-----------------|-------------
+9|137
