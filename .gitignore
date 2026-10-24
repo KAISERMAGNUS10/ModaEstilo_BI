@@ -1,3 +1,6 @@
 # Power BI: caché de datos y configuración local del proyecto PBIP
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
+
+# Documentos de trabajo para el informe (no forman parte del repositorio)
+entregables/
