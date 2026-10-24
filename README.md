@@ -9,6 +9,7 @@ database/
   01_ModaEstilo_BI_Demo.sql             Base ModaEstilo_BI_Demo: tablas, datos sintéticos, validaciones y vistas bi
   02_Consultas_Validacion_BI.sql        Consultas Q1–Q5 (indicadores y conteos de control)
   03_Pruebas_5_4_Calidad_Seguridad.sql  Pruebas de la sección 5.4 en SQL Server
+  04_Consultas_Procedimiento_Replicacion_ETL.sql  Consultas paso a paso del procedimiento de replicación del ETL (OLTP a OLAP)
 powerbi/
   ModaEstilo_BI.pbix                    Dashboard con datos (abrir con Power BI Desktop)
   ModaEstilo_BI.pbip                    Mismo proyecto en formato de texto (modelo y reporte versionables)
