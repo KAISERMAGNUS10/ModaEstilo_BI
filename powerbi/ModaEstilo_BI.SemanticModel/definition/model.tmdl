@@ -1,0 +1,19 @@
+model Model
+	culture: es-PE
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-PE
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+ref table DimFecha
+ref table DimArticulo
+ref table DimTrabajador
+ref table DimCliente
+ref table FactVenta
+ref table FactAlquiler
+ref table FactPenalidad
+ref table FactGasto
+ref table FactPago

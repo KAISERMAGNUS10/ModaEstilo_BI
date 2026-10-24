@@ -1,0 +1,32 @@
+table DimTrabajador
+	lineageTag: 1f4d5c3c-a8c6-5e6e-a060-ea70cd14cc10
+
+	column TrabajadorKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 481be4a6-fb8b-566d-b7df-b75b80d0a7f5
+		summarizeBy: none
+		sourceColumn: TrabajadorKey
+
+	column Trabajador
+		dataType: string
+		lineageTag: f3df6b38-88cd-55e7-9139-63f87ef95688
+		summarizeBy: none
+		sourceColumn: Trabajador
+
+	column Cargo
+		dataType: string
+		lineageTag: 8cf23b89-60e1-5c10-abc9-1e502a05f0d3
+		summarizeBy: none
+		sourceColumn: Cargo
+
+	partition DimTrabajador = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("localhost", "ModaEstilo_BI_Demo"),
+				    Vista = Origen{[Schema="bi", Item="DimTrabajador"]}[Data],
+				    Columnas = Table.SelectColumns(Vista, {"TrabajadorKey", "Trabajador", "Cargo"})
+				in
+				    Columnas

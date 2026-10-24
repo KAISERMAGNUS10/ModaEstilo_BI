@@ -1,0 +1,45 @@
+table FactGasto
+	lineageTag: 69260fb8-2719-5a46-8d39-46f1e6d16e62
+
+	measure 'Gastos Totales' = SUM(FactGasto[MontoGasto])
+		formatString: #,##0.00
+		displayFolder: Gastos
+		lineageTag: 892ab3cb-b477-5274-a750-63ee2763784f
+
+	column GastoID
+		dataType: int64
+		formatString: 0
+		lineageTag: a29e4cf7-3e03-540e-858b-91a77899bef4
+		summarizeBy: none
+		sourceColumn: GastoID
+
+	column FechaGastoKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 0c2019d0-21d8-5612-b848-d3ec3ce54659
+		summarizeBy: none
+		sourceColumn: FechaGastoKey
+
+	column TipoGasto
+		dataType: string
+		lineageTag: 4bcf7bb8-a455-5692-9053-2333cfc0bb18
+		summarizeBy: none
+		sourceColumn: TipoGasto
+
+	column MontoGasto
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 99cb1bd3-b15c-5556-8252-26e3ae9ca819
+		summarizeBy: none
+		sourceColumn: MontoGasto
+
+	partition FactGasto = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("localhost", "ModaEstilo_BI_Demo"),
+				    Vista = Origen{[Schema="bi", Item="FactGasto"]}[Data],
+				    Columnas = Table.SelectColumns(Vista, {"GastoID", "FechaGastoKey", "TipoGasto", "MontoGasto"})
+				in
+				    Columnas

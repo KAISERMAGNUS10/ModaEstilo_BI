@@ -1,0 +1,139 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 560,
+            "y": 0
+          },
+          "nodeIndex": "DimFecha",
+          "nodeLineageTag": "18084fe1-1c48-5c1f-aa12-9f8140bf5403",
+          "size": {
+            "height": 255,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 140,
+            "y": 760
+          },
+          "nodeIndex": "DimArticulo",
+          "nodeLineageTag": "28b6db0b-7a40-589d-a175-7b1b8e09bb1c",
+          "size": {
+            "height": 380,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 980,
+            "y": 760
+          },
+          "nodeIndex": "DimTrabajador",
+          "nodeLineageTag": "1f4d5c3c-a8c6-5e6e-a060-ea70cd14cc10",
+          "size": {
+            "height": 155,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 560,
+            "y": 760
+          },
+          "nodeIndex": "DimCliente",
+          "nodeLineageTag": "5e4c0e58-6bb8-5e68-b871-0e5b03bdd7c5",
+          "size": {
+            "height": 130,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 330
+          },
+          "nodeIndex": "FactVenta",
+          "nodeLineageTag": "520167ca-fbc7-595b-866a-ed2f2feea0f7",
+          "size": {
+            "height": 400,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 280,
+            "y": 330
+          },
+          "nodeIndex": "FactAlquiler",
+          "nodeLineageTag": "2b4d82e4-be62-57df-a96b-657f8ac60026",
+          "size": {
+            "height": 400,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 560,
+            "y": 330
+          },
+          "nodeIndex": "FactPenalidad",
+          "nodeLineageTag": "c7ec0645-33e4-5d3d-9218-933b447e1c0f",
+          "size": {
+            "height": 380,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 840,
+            "y": 330
+          },
+          "nodeIndex": "FactGasto",
+          "nodeLineageTag": "69260fb8-2719-5a46-8d39-46f1e6d16e62",
+          "size": {
+            "height": 205,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1120,
+            "y": 330
+          },
+          "nodeIndex": "FactPago",
+          "nodeLineageTag": "be86ca2d-12dc-5b41-a1f9-eeba273a0110",
+          "size": {
+            "height": 305,
+            "width": 234
+          },
+          "zIndex": 8
+        }
+      ],
+      "name": "Todas las tablas",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas las tablas",
+  "defaultDiagram": "Todas las tablas"
+}

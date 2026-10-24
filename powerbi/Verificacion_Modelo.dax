@@ -1,0 +1,32 @@
+// Consultas DAX de verificación del modelo ModaEstilo_BI (ejecutar en DAX Studio o en la vista de consultas DAX de Power BI).
+// Cada EVALUATE es una consulta independiente. Resultados en resultados/Verificacion_PowerBI_vs_SQL.txt.
+
+EVALUATE ROW(
+ "DimFecha", COUNTROWS(DimFecha), "DimArticulo", COUNTROWS(DimArticulo), "DimTrabajador", COUNTROWS(DimTrabajador),
+ "DimCliente", COUNTROWS(DimCliente), "FactVenta", COUNTROWS(FactVenta), "FactAlquiler", COUNTROWS(FactAlquiler),
+ "FactPenalidad", COUNTROWS(FactPenalidad), "FactGasto", COUNTROWS(FactGasto), "FactPago", COUNTROWS(FactPago))
+
+EVALUATE ROW(
+ "Ingreso Total", [Ingreso Total], "Ingreso Ventas", [Ingreso Ventas], "Ingreso Alquileres", [Ingreso Alquileres],
+ "Operaciones", [Número de Operaciones], "Ticket", [Ticket Promedio], "Gastos", [Gastos Totales],
+ "Cobros", [Cobros Confirmados], "Penalidades", [Monto Penalidades], "NPen", [Número de Penalidades])
+
+EVALUATE ROW(
+ "NVentas", [Número de Ventas], "Unid", [Unidades Vendidas], "TicketV", [Ticket Promedio Venta],
+ "Margen", [Margen Bruto Ventas], "PctMargen", [% Margen Bruto], "StockCrit", [Artículos en Stock Crítico], "Stock", [Stock Disponible])
+
+EVALUATE ROW(
+ "NAlq", [Número de Alquileres], "Pend", [Alquileres Pendientes], "Dev", [Alquileres Devueltos],
+ "Tasa", [Tasa de Devolución], "Retraso", [Devoluciones con Retraso], "PctRetraso", [% Devoluciones con Retraso])
+
+EVALUATE SUMMARIZECOLUMNS(DimArticulo[Categoria], "Ventas", [Ingreso Ventas], "Alquileres", [Ingreso Alquileres])
+
+EVALUATE SUMMARIZECOLUMNS(DimFecha[Anio], "Ventas", [Ingreso Ventas], "Alquileres", [Ingreso Alquileres], "NV", [Número de Ventas], "NA", [Número de Alquileres])
+
+EVALUATE TOPN(12, SUMMARIZECOLUMNS(DimArticulo[Articulo], "U", [Unidades Vendidas], "Top", [Unidades Vendidas Top 10]), [U], DESC)
+
+EVALUATE SUMMARIZECOLUMNS(DimFecha[Anio], FactPenalidad[TipoPenalidad], "Monto", [Monto Penalidades])
+
+EVALUATE SUMMARIZECOLUMNS(FactPago[MetodoPago], "Cobros", [Cobros Confirmados])
+
+EVALUATE SUMMARIZECOLUMNS(FactAlquiler[TipoEvento], "N", [Número de Alquileres])

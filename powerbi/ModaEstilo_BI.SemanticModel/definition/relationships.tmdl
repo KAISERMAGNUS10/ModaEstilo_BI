@@ -1,0 +1,63 @@
+relationship da1019bb-7e52-51c4-8340-a289bc2e006a
+	fromColumn: FactVenta.FechaVentaKey
+	toColumn: DimFecha.FechaKey
+
+relationship b8f90500-46a9-5d45-8a0a-46e4c4afb058
+	fromColumn: FactVenta.ArticuloKey
+	toColumn: DimArticulo.ArticuloKey
+
+relationship 1dce0337-2acb-56ee-bb44-f5e632e72c87
+	fromColumn: FactVenta.ClienteKey
+	toColumn: DimCliente.ClienteKey
+
+relationship 5bc3b141-6629-56e2-85f0-ea743e56429a
+	fromColumn: FactVenta.TrabajadorKey
+	toColumn: DimTrabajador.TrabajadorKey
+
+relationship 008c57e1-a962-549f-ae49-cf43cbe6bfcd
+	fromColumn: FactAlquiler.FechaAlquilerKey
+	toColumn: DimFecha.FechaKey
+
+relationship 9a034f90-ee8d-5bd9-8330-ec6305f4538a
+	fromColumn: FactAlquiler.ArticuloKey
+	toColumn: DimArticulo.ArticuloKey
+
+relationship a6152a38-6af3-51a6-a58e-c77d7b095f96
+	fromColumn: FactAlquiler.ClienteKey
+	toColumn: DimCliente.ClienteKey
+
+relationship ec79e3a8-25d1-589a-bbb2-e029203f53c3
+	fromColumn: FactAlquiler.TrabajadorKey
+	toColumn: DimTrabajador.TrabajadorKey
+
+relationship afee4106-31e8-5002-9a45-f8d21854be31
+	fromColumn: FactPenalidad.FechaPenalidadKey
+	toColumn: DimFecha.FechaKey
+
+relationship 2ca13b9a-915b-5ce1-9b46-4d9ff6955e43
+	fromColumn: FactPenalidad.ArticuloKey
+	toColumn: DimArticulo.ArticuloKey
+
+relationship ce9763f3-c4ca-5ea7-8adf-1ca2c8661ccd
+	fromColumn: FactPenalidad.ClienteKey
+	toColumn: DimCliente.ClienteKey
+
+relationship 7bced7bb-834e-5492-bf40-d6bab2017702
+	fromColumn: FactPenalidad.TrabajadorKey
+	toColumn: DimTrabajador.TrabajadorKey
+
+relationship 292b5823-d9a1-5c87-9280-8b92a1223c34
+	fromColumn: FactGasto.FechaGastoKey
+	toColumn: DimFecha.FechaKey
+
+relationship 188b5fe9-60d7-5bfc-a4b8-ab30377741a6
+	fromColumn: FactPago.FechaPagoKey
+	toColumn: DimFecha.FechaKey
+
+relationship 64b16e63-ad94-58dd-920e-77def68ebbfd
+	fromColumn: FactPago.ClienteKey
+	toColumn: DimCliente.ClienteKey
+
+relationship 3ecf1c9d-d92d-5bb5-a592-3c397d804fe3
+	fromColumn: FactPago.TrabajadorKey
+	toColumn: DimTrabajador.TrabajadorKey

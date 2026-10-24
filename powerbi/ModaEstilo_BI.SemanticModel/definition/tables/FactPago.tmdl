@@ -1,0 +1,73 @@
+table FactPago
+	lineageTag: be86ca2d-12dc-5b41-a1f9-eeba273a0110
+
+	measure 'Cobros Confirmados' = CALCULATE(SUM(FactPago[MontoPago]), FactPago[EstadoPago] = "Confirmado")
+		formatString: #,##0.00
+		displayFolder: Cobros
+		lineageTag: 8a322f35-45bd-5fef-b1fc-669132fed7be
+
+	column PagoID
+		dataType: int64
+		formatString: 0
+		lineageTag: 55aedbda-88b0-59f1-b4bc-3bbbc7670eba
+		summarizeBy: none
+		sourceColumn: PagoID
+
+	column FechaPagoKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 8599b97b-8029-53c7-80d4-6b93e9ac872f
+		summarizeBy: none
+		sourceColumn: FechaPagoKey
+
+	column ClienteKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 888e07d6-cbd0-55d7-aff2-abb72612f494
+		summarizeBy: none
+		sourceColumn: ClienteKey
+
+	column TrabajadorKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 9d8209ab-dda3-5354-8773-986c5d4ff2dd
+		summarizeBy: none
+		sourceColumn: TrabajadorKey
+
+	column TipoOperacion
+		dataType: string
+		lineageTag: bc242e57-90f7-5e20-a862-5cf79a25a81a
+		summarizeBy: none
+		sourceColumn: TipoOperacion
+
+	column MetodoPago
+		dataType: string
+		lineageTag: d423ac67-b20b-5e99-834a-b76871b05f68
+		summarizeBy: none
+		sourceColumn: MetodoPago
+
+	column MontoPago
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 9e149aa8-3a1d-5004-a9e7-276fce8ba6a4
+		summarizeBy: none
+		sourceColumn: MontoPago
+
+	column EstadoPago
+		dataType: string
+		lineageTag: 1451102e-bbc4-5a0a-8ea9-a33cfec13160
+		summarizeBy: none
+		sourceColumn: EstadoPago
+
+	partition FactPago = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("localhost", "ModaEstilo_BI_Demo"),
+				    Vista = Origen{[Schema="bi", Item="FactPago"]}[Data],
+				    Columnas = Table.SelectColumns(Vista, {"PagoID", "FechaPagoKey", "ClienteKey", "TrabajadorKey", "TipoOperacion", "MetodoPago", "MontoPago", "EstadoPago"})
+				in
+				    Columnas

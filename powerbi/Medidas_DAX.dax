@@ -1,0 +1,70 @@
+// Medidas DAX del modelo ModaEstilo_BI (Power BI). Tabla de origen entre corchetes.
+
+// [FactVenta] Carpeta: Ventas | Formato: #,##0.00
+Ingreso Ventas = SUM(FactVenta[ImporteVenta])
+
+// [FactVenta] Carpeta: Ventas | Formato: #,##0
+Número de Ventas = DISTINCTCOUNT(FactVenta[VentaID])
+
+// [FactVenta] Carpeta: Ventas | Formato: #,##0
+Unidades Vendidas = SUM(FactVenta[Cantidad])
+
+// [FactVenta] Carpeta: Ventas | Formato: #,##0.00
+Ticket Promedio Venta = DIVIDE([Ingreso Ventas], [Número de Ventas])
+
+// [FactVenta] Carpeta: Ventas | Formato: #,##0.00
+Margen Bruto Ventas = SUM(FactVenta[MargenBrutoVenta])
+
+// [FactVenta] Carpeta: Ventas | Formato: 0.00%
+% Margen Bruto = DIVIDE([Margen Bruto Ventas], [Ingreso Ventas])
+
+// [FactVenta] Carpeta: Ventas | Formato: #,##0
+Unidades Vendidas Top 10 = IF(ISINSCOPE(DimArticulo[Articulo]), IF(SELECTEDVALUE(DimArticulo[Articulo]) IN TOPN(10, ALLSELECTED(DimArticulo[Articulo]), [Unidades Vendidas], DESC, DimArticulo[Articulo], ASC), [Unidades Vendidas]), [Unidades Vendidas])
+
+// [FactAlquiler] Carpeta: Alquileres | Formato: #,##0.00
+Ingreso Alquileres = SUM(FactAlquiler[ImporteAlquiler])
+
+// [FactAlquiler] Carpeta: Alquileres | Formato: #,##0
+Número de Alquileres = DISTINCTCOUNT(FactAlquiler[AlquilerID])
+
+// [FactAlquiler] Carpeta: Alquileres | Formato: #,##0
+Alquileres Pendientes = CALCULATE([Número de Alquileres], FactAlquiler[EstadoAlquiler] IN {"En curso", "Reservado", "Vencido"})
+
+// [FactAlquiler] Carpeta: Alquileres | Formato: #,##0
+Alquileres Devueltos = CALCULATE([Número de Alquileres], FactAlquiler[EstadoAlquiler] = "Devuelto")
+
+// [FactAlquiler] Carpeta: Alquileres | Formato: 0.00%
+Tasa de Devolución = DIVIDE([Alquileres Devueltos], [Número de Alquileres])
+
+// [FactAlquiler] Carpeta: Alquileres | Formato: #,##0
+Devoluciones con Retraso = CALCULATE([Número de Alquileres], FactAlquiler[FuePuntual] == 0)
+
+// [FactAlquiler] Carpeta: Alquileres | Formato: 0.00%
+% Devoluciones con Retraso = DIVIDE([Devoluciones con Retraso], [Alquileres Devueltos])
+
+// [FactPenalidad] Carpeta: Penalidades | Formato: #,##0.00
+Monto Penalidades = SUM(FactPenalidad[MontoPenalidad])
+
+// [FactPenalidad] Carpeta: Penalidades | Formato: #,##0
+Número de Penalidades = COUNTROWS(FactPenalidad)
+
+// [FactGasto] Carpeta: Gastos | Formato: #,##0.00
+Gastos Totales = SUM(FactGasto[MontoGasto])
+
+// [FactPago] Carpeta: Cobros | Formato: #,##0.00
+Cobros Confirmados = CALCULATE(SUM(FactPago[MontoPago]), FactPago[EstadoPago] = "Confirmado")
+
+// [FactVenta] Carpeta: Resumen | Formato: #,##0.00
+Ingreso Total = [Ingreso Ventas] + [Ingreso Alquileres]
+
+// [FactVenta] Carpeta: Resumen | Formato: #,##0
+Número de Operaciones = [Número de Ventas] + [Número de Alquileres]
+
+// [FactVenta] Carpeta: Resumen | Formato: #,##0.00
+Ticket Promedio = DIVIDE([Ingreso Total], [Número de Operaciones])
+
+// [DimArticulo] Carpeta: Inventario | Formato: #,##0
+Stock Disponible = SUM(DimArticulo[StockActual])
+
+// [DimArticulo] Carpeta: Inventario | Formato: #,##0
+Artículos en Stock Crítico = COUNTROWS(FILTER(DimArticulo, DimArticulo[StockActual] <= DimArticulo[StockMinimo])) + 0

@@ -1,0 +1,45 @@
+﻿Resultados de las consultas Q1-Q5 en SQL Server
+Ejecucion: 2026-10-23 20:34:12 -05:00 | Servidor: GIAN_FRANCO (SQL Server 2025 Standard Developer Edition 17.0.1000.7) | Base: ModaEstilo_BI_Demo | Script: database/02_Consultas_Validacion_BI.sql
+
+Changed database context to 'ModaEstilo_BI_Demo'.
+IngresoVentas|IngresoAlquileres|IngresoTotal|NumeroVentas|NumeroAlquileres|NumeroOperaciones|TicketPromedio|TicketPromedioVenta|MargenBruto|PctMargenBruto|GastosTotales|MontoPenalidades|CobrosConfirmados
+-------------|-----------------|------------|------------|----------------|-----------------|--------------|-------------------|-----------|--------------|-------------|----------------|-----------------
+92784.70|44131.00|136915.70|185|240|425|322.15|501.54|47069.70|50.73|37635.00|6080.00|140326.14
+Categoria|IngresoVentas|IngresoAlquileres
+---------|-------------|-----------------
+Ternos|28086.00|16734.25
+Vestidos|15321.50|16348.75
+Conjuntos femeninos|13576.50|4456.50
+Calzado|9454.00|1319.75
+Pantalones|7307.75|163.00
+Blazers y sacos|6977.75|1438.75
+Camisas|4428.00|158.00
+Trajes infantiles|3980.25|3389.00
+Accesorios|3652.95|123.00
+Anio|IngresoVentas|IngresoAlquileres|NumeroVentas|NumeroAlquileres
+----|-------------|-----------------|------------|----------------
+2024|30605.75|11545.00|60|70
+2025|34270.25|17175.50|70|88
+2026|27908.70|15410.50|55|82
+NumeroAlquileres|AlquileresDevueltos|AlquileresPendientes|PctTasaDevolucion|DevolucionesConRetraso|PctDevolucionesConRetraso
+----------------|-------------------|--------------------|-----------------|----------------------|-------------------------
+240|230|10|95.83|53|23.04
+TipoPenalidad|Penalidades|Monto
+-------------|-----------|-----
+Reparación|25|2675.00
+Mora|53|2325.00
+Limpieza|24|1080.00
+Vista|Filas
+-----|-----
+bi.DimCalendario|1096
+bi.DimArticulo|46
+bi.DimTrabajador|7
+bi.DimCliente|90
+bi.FactVenta|323
+bi.FactAlquiler|378
+bi.FactPenalidad|102
+bi.FactGasto|137
+bi.FactPago|566
+VentaSinFecha|AlquilerSinFecha|PenalidadSinFecha|GastoSinFecha|PagoSinFecha
+-------------|----------------|-----------------|-------------|------------
+0|0|0|0|0

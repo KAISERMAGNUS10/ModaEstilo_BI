@@ -1,0 +1,62 @@
+table DimFecha
+	lineageTag: 18084fe1-1c48-5c1f-aa12-9f8140bf5403
+
+	column FechaKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 6668ebd8-48e3-5622-b077-21501bb051d4
+		summarizeBy: none
+		sourceColumn: FechaKey
+
+	column Fecha
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 0d6f9dea-eae0-5dee-b22a-dbe6b848b61b
+		summarizeBy: none
+		sourceColumn: Fecha
+
+	column Anio
+		dataType: int64
+		formatString: 0
+		lineageTag: 7aff43c6-71f3-50a5-81ec-1768a07e5bd4
+		summarizeBy: none
+		sourceColumn: Anio
+
+	column Trimestre
+		dataType: int64
+		formatString: 0
+		lineageTag: 80ddc454-cec8-5c4d-8fb4-d9e63cec20fb
+		summarizeBy: none
+		sourceColumn: Trimestre
+
+	column MesNumero
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 499004dc-acce-52f5-99ce-217176f4bdce
+		summarizeBy: none
+		sourceColumn: MesNumero
+
+	column MesNombre
+		dataType: string
+		lineageTag: f9343a12-0b59-5c4d-871c-72d10d747778
+		summarizeBy: none
+		sourceColumn: MesNombre
+		sortByColumn: MesNumero
+
+	column AnioMes
+		dataType: string
+		lineageTag: a50eecaf-5776-55e2-9515-1b4d8287c3ad
+		summarizeBy: none
+		sourceColumn: AnioMes
+
+	partition DimFecha = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("localhost", "ModaEstilo_BI_Demo"),
+				    Vista = Origen{[Schema="bi", Item="DimCalendario"]}[Data],
+				    Columnas = Table.SelectColumns(Vista, {"FechaKey", "Fecha", "Anio", "Trimestre", "MesNumero", "MesNombre", "AnioMes"})
+				in
+				    Columnas

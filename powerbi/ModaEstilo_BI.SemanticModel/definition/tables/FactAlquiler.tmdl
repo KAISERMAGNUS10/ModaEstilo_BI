@@ -1,0 +1,147 @@
+table FactAlquiler
+	lineageTag: 2b4d82e4-be62-57df-a96b-657f8ac60026
+
+	measure 'Ingreso Alquileres' = SUM(FactAlquiler[ImporteAlquiler])
+		formatString: #,##0.00
+		displayFolder: Alquileres
+		lineageTag: c98ab8b1-ce75-5ce4-9c00-6250e124e539
+
+	measure 'Número de Alquileres' = DISTINCTCOUNT(FactAlquiler[AlquilerID])
+		formatString: #,##0
+		displayFolder: Alquileres
+		lineageTag: 599bcbc2-f286-55fb-b9db-db7d87137279
+
+	measure 'Alquileres Pendientes' = CALCULATE([Número de Alquileres], FactAlquiler[EstadoAlquiler] IN {"En curso", "Reservado", "Vencido"})
+		formatString: #,##0
+		displayFolder: Alquileres
+		lineageTag: 0ce6d8a5-5599-5414-ba52-46530add107c
+
+	measure 'Alquileres Devueltos' = CALCULATE([Número de Alquileres], FactAlquiler[EstadoAlquiler] = "Devuelto")
+		formatString: #,##0
+		displayFolder: Alquileres
+		lineageTag: b77ecdd5-b8db-50af-8d0d-e34ea5eac560
+
+	measure 'Tasa de Devolución' = DIVIDE([Alquileres Devueltos], [Número de Alquileres])
+		formatString: 0.00%
+		displayFolder: Alquileres
+		lineageTag: 6b824bf2-42ee-5666-9b35-9e311c0ef0ed
+
+	measure 'Devoluciones con Retraso' = CALCULATE([Número de Alquileres], FactAlquiler[FuePuntual] == 0)
+		formatString: #,##0
+		displayFolder: Alquileres
+		lineageTag: d4ae67e1-1ead-54f5-80d0-ad8897923bfd
+
+	measure '% Devoluciones con Retraso' = DIVIDE([Devoluciones con Retraso], [Alquileres Devueltos])
+		formatString: 0.00%
+		displayFolder: Alquileres
+		lineageTag: 5523bfc8-0e42-56c5-818c-d56efe3be6ed
+
+	column DetalleAlquilerKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 14bb74d4-1b23-58b5-a691-cdb9a0d467a8
+		summarizeBy: none
+		sourceColumn: DetalleAlquilerKey
+
+	column AlquilerID
+		dataType: int64
+		formatString: 0
+		lineageTag: 320296b9-a755-518d-a390-27673a4ec854
+		summarizeBy: none
+		sourceColumn: AlquilerID
+
+	column FechaAlquilerKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 89710a21-ff08-5f35-af2b-1b5b8377517b
+		summarizeBy: none
+		sourceColumn: FechaAlquilerKey
+
+	column ArticuloKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: b081a5bf-b794-5ce5-902c-9dec5787c7ff
+		summarizeBy: none
+		sourceColumn: ArticuloKey
+
+	column ClienteKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: edb1e2b7-10c5-5a4c-a461-964ac7b8f6c1
+		summarizeBy: none
+		sourceColumn: ClienteKey
+
+	column TrabajadorKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 0b9ba09b-d7f5-50c9-9803-113800fdf8a6
+		summarizeBy: none
+		sourceColumn: TrabajadorKey
+
+	column EstadoAlquiler
+		dataType: string
+		lineageTag: 7a2a6a80-fe74-57b7-b9d0-a2c18a3911c9
+		summarizeBy: none
+		sourceColumn: EstadoAlquiler
+
+	column TipoEvento
+		dataType: string
+		lineageTag: 610ad362-3fb1-5441-9256-50f5a4f0f48c
+		summarizeBy: none
+		sourceColumn: TipoEvento
+
+	column CanalReserva
+		dataType: string
+		lineageTag: d19764bc-25ea-50ec-b9aa-99fd4425aa82
+		summarizeBy: none
+		sourceColumn: CanalReserva
+
+	column Cantidad
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 432ae7a4-0755-5dc4-a7a1-9bf333cd2e39
+		summarizeBy: none
+		sourceColumn: Cantidad
+
+	column PrecioUnitario
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 43959916-ea12-5dd4-bbd6-9c69fe826d38
+		summarizeBy: none
+		sourceColumn: PrecioUnitario
+
+	column ImporteAlquiler
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: dec00d28-8dcc-54ef-874d-e39a1f67c1e9
+		summarizeBy: none
+		sourceColumn: ImporteAlquiler
+
+	column DiasRetraso
+		dataType: int64
+		formatString: 0
+		lineageTag: 2b40279a-5817-5533-928f-2c48956216ea
+		summarizeBy: none
+		sourceColumn: DiasRetraso
+
+	column FuePuntual
+		dataType: int64
+		formatString: 0
+		lineageTag: d239e198-e227-53b8-9ec0-91d611fa62e4
+		summarizeBy: none
+		sourceColumn: FuePuntual
+
+	partition FactAlquiler = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("localhost", "ModaEstilo_BI_Demo"),
+				    Vista = Origen{[Schema="bi", Item="FactAlquiler"]}[Data],
+				    Columnas = Table.SelectColumns(Vista, {"DetalleAlquilerKey", "AlquilerID", "FechaAlquilerKey", "ArticuloKey", "ClienteKey", "TrabajadorKey", "EstadoAlquiler", "TipoEvento", "CanalReserva", "Cantidad", "PrecioUnitario", "ImporteAlquiler", "DiasRetraso", "FuePuntual"})
+				in
+				    Columnas

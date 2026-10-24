@@ -1,0 +1,88 @@
+table DimArticulo
+	lineageTag: 28b6db0b-7a40-589d-a175-7b1b8e09bb1c
+
+	measure 'Stock Disponible' = SUM(DimArticulo[StockActual])
+		formatString: #,##0
+		displayFolder: Inventario
+		lineageTag: 4bc3a51e-e1bd-5f82-89e6-59b6dd9378f2
+
+	measure 'Artículos en Stock Crítico' = COUNTROWS(FILTER(DimArticulo, DimArticulo[StockActual] <= DimArticulo[StockMinimo])) + 0
+		formatString: #,##0
+		displayFolder: Inventario
+		lineageTag: f2253221-6398-5c3e-a8f7-f6b080b7ee74
+
+	column ArticuloKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 3f336b40-9340-5980-9dbe-3d62e60b45fe
+		summarizeBy: none
+		sourceColumn: ArticuloKey
+
+	column Codigo
+		dataType: string
+		lineageTag: 3f3326e8-937b-59d2-bac9-de011095de67
+		summarizeBy: none
+		sourceColumn: Codigo
+
+	column Articulo
+		dataType: string
+		lineageTag: 68895ede-5ca5-5230-bfdb-23fde3e75bdb
+		summarizeBy: none
+		sourceColumn: Articulo
+
+	column Categoria
+		dataType: string
+		lineageTag: 2e98055a-6ca8-5478-b5b7-3924f81620db
+		summarizeBy: none
+		sourceColumn: Categoria
+
+	column Talla
+		dataType: string
+		lineageTag: fe91b3bd-877e-57a9-8631-4f4e084ad8fc
+		summarizeBy: none
+		sourceColumn: Talla
+
+	column Color
+		dataType: string
+		lineageTag: 5207c847-43f7-5cc3-a257-9661d7b15536
+		summarizeBy: none
+		sourceColumn: Color
+
+	column PrecioListaVenta
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 7e2a350f-6cef-5e9a-bfe4-8000fbe3eb47
+		summarizeBy: none
+		sourceColumn: PrecioListaVenta
+
+	column PrecioListaAlquiler
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 5ed63a16-692f-5ea0-a90d-555386cf0337
+		summarizeBy: none
+		sourceColumn: PrecioListaAlquiler
+
+	column StockActual
+		dataType: int64
+		formatString: #,##0
+		lineageTag: e849ad67-b2d2-5e6a-a8a8-056f0ea796a9
+		summarizeBy: none
+		sourceColumn: StockActual
+
+	column StockMinimo
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 6d23f334-98e5-5ac6-8edc-507cc17d67a8
+		summarizeBy: none
+		sourceColumn: StockMinimo
+
+	partition DimArticulo = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("localhost", "ModaEstilo_BI_Demo"),
+				    Vista = Origen{[Schema="bi", Item="DimArticulo"]}[Data],
+				    Columnas = Table.SelectColumns(Vista, {"ArticuloKey", "Codigo", "Articulo", "Categoria", "Talla", "Color", "PrecioListaVenta", "PrecioListaAlquiler", "StockActual", "StockMinimo"})
+				in
+				    Columnas

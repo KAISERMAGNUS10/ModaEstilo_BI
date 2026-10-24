@@ -1,0 +1,162 @@
+table FactVenta
+	lineageTag: 520167ca-fbc7-595b-866a-ed2f2feea0f7
+
+	measure 'Ingreso Ventas' = SUM(FactVenta[ImporteVenta])
+		formatString: #,##0.00
+		displayFolder: Ventas
+		lineageTag: ad78b470-cca3-51ea-b5da-c72876e9d6cd
+
+	measure 'Número de Ventas' = DISTINCTCOUNT(FactVenta[VentaID])
+		formatString: #,##0
+		displayFolder: Ventas
+		lineageTag: cc07ab04-55cb-5e20-9138-bc57f0980438
+
+	measure 'Unidades Vendidas' = SUM(FactVenta[Cantidad])
+		formatString: #,##0
+		displayFolder: Ventas
+		lineageTag: 48ef2ed0-e5e4-5ef8-b951-74acafe6b2bf
+
+	measure 'Ticket Promedio Venta' = DIVIDE([Ingreso Ventas], [Número de Ventas])
+		formatString: #,##0.00
+		displayFolder: Ventas
+		lineageTag: 4dff219d-9f47-55e5-a33f-abf1c64fa3e0
+
+	measure 'Margen Bruto Ventas' = SUM(FactVenta[MargenBrutoVenta])
+		formatString: #,##0.00
+		displayFolder: Ventas
+		lineageTag: 4118c43e-01a8-5a6d-8155-5dabb5a00e23
+
+	measure '% Margen Bruto' = DIVIDE([Margen Bruto Ventas], [Ingreso Ventas])
+		formatString: 0.00%
+		displayFolder: Ventas
+		lineageTag: 26154c24-c7f7-544d-8e41-aae46c1c79b5
+
+	measure 'Unidades Vendidas Top 10' = IF(ISINSCOPE(DimArticulo[Articulo]), IF(SELECTEDVALUE(DimArticulo[Articulo]) IN TOPN(10, ALLSELECTED(DimArticulo[Articulo]), [Unidades Vendidas], DESC, DimArticulo[Articulo], ASC), [Unidades Vendidas]), [Unidades Vendidas])
+		formatString: #,##0
+		displayFolder: Ventas
+		lineageTag: ac3ca544-8ee6-500e-9f9b-a0ede6e2397e
+
+	measure 'Ingreso Total' = [Ingreso Ventas] + [Ingreso Alquileres]
+		formatString: #,##0.00
+		displayFolder: Resumen
+		lineageTag: b794e0cb-5eff-575a-8092-c00789a85f02
+
+	measure 'Número de Operaciones' = [Número de Ventas] + [Número de Alquileres]
+		formatString: #,##0
+		displayFolder: Resumen
+		lineageTag: 3626e5dd-ff75-59f3-b769-bc034950b415
+
+	measure 'Ticket Promedio' = DIVIDE([Ingreso Total], [Número de Operaciones])
+		formatString: #,##0.00
+		displayFolder: Resumen
+		lineageTag: 54d4c7de-7180-5cb5-a6d1-2f8d9f61f174
+
+	column DetalleVentaKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 603692a3-3b40-5518-ad22-b6d9a5d956ff
+		summarizeBy: none
+		sourceColumn: DetalleVentaKey
+
+	column VentaID
+		dataType: int64
+		formatString: 0
+		lineageTag: 29a514a3-a4ae-5636-8184-18068f1b909f
+		summarizeBy: none
+		sourceColumn: VentaID
+
+	column FechaVentaKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: c54ed7d3-bc5c-5970-9df2-06db8f958c6e
+		summarizeBy: none
+		sourceColumn: FechaVentaKey
+
+	column ArticuloKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 7015e489-750e-5c80-a3d5-e761db933200
+		summarizeBy: none
+		sourceColumn: ArticuloKey
+
+	column ClienteKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: f1a8a0fa-1bca-5901-af2d-033861a6c6a7
+		summarizeBy: none
+		sourceColumn: ClienteKey
+
+	column TrabajadorKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 71f27fdb-9a91-5073-b6bb-3f3d73b46806
+		summarizeBy: none
+		sourceColumn: TrabajadorKey
+
+	column CanalVenta
+		dataType: string
+		lineageTag: 173df567-3659-513b-b870-5da9f9c4f77e
+		summarizeBy: none
+		sourceColumn: CanalVenta
+
+	column Comprobante
+		dataType: string
+		lineageTag: 2f330607-cb2c-5731-9ae4-00fc195bd4e7
+		summarizeBy: none
+		sourceColumn: Comprobante
+
+	column EstadoVenta
+		dataType: string
+		lineageTag: bca74bc3-3fee-55d8-a2da-c8f6ae57b0ca
+		summarizeBy: none
+		sourceColumn: EstadoVenta
+
+	column Cantidad
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 49138135-62f7-5f2a-bd6c-aecbec0965b0
+		summarizeBy: none
+		sourceColumn: Cantidad
+
+	column PrecioUnitario
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: b2b7ecc3-684f-5244-9ddc-c7b19061cf6c
+		summarizeBy: none
+		sourceColumn: PrecioUnitario
+
+	column ImporteVenta
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 2a0bbf8e-4024-57ce-9770-aaea68b34308
+		summarizeBy: none
+		sourceColumn: ImporteVenta
+
+	column CostoMercaderia
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 2da65ef7-6838-5612-b131-57d85dc6e637
+		summarizeBy: none
+		sourceColumn: CostoMercaderia
+
+	column MargenBrutoVenta
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 46159aae-b173-5c20-8395-9d86de437146
+		summarizeBy: none
+		sourceColumn: MargenBrutoVenta
+
+	partition FactVenta = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("localhost", "ModaEstilo_BI_Demo"),
+				    Vista = Origen{[Schema="bi", Item="FactVenta"]}[Data],
+				    Columnas = Table.SelectColumns(Vista, {"DetalleVentaKey", "VentaID", "FechaVentaKey", "ArticuloKey", "ClienteKey", "TrabajadorKey", "CanalVenta", "Comprobante", "EstadoVenta", "Cantidad", "PrecioUnitario", "ImporteVenta", "CostoMercaderia", "MargenBrutoVenta"})
+				in
+				    Columnas

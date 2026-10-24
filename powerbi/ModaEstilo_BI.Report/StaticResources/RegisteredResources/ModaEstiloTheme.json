@@ -1,0 +1,16 @@
+{
+  "name": "ModaEstilo",
+  "dataColors": [
+    "#2F5496",
+    "#ED7D31",
+    "#70AD47",
+    "#FFC000",
+    "#5B9BD5",
+    "#A5A5A5",
+    "#264478",
+    "#9E480E"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#1F2937",
+  "tableAccent": "#2F5496"
+}

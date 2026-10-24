@@ -1,0 +1,94 @@
+table FactPenalidad
+	lineageTag: c7ec0645-33e4-5d3d-9218-933b447e1c0f
+
+	measure 'Monto Penalidades' = SUM(FactPenalidad[MontoPenalidad])
+		formatString: #,##0.00
+		displayFolder: Penalidades
+		lineageTag: dc5afe35-4e5a-5c2d-86cd-cf84b3b2de86
+
+	measure 'Número de Penalidades' = COUNTROWS(FactPenalidad)
+		formatString: #,##0
+		displayFolder: Penalidades
+		lineageTag: 3f72aa3c-6955-5254-8525-6e5102322f4a
+
+	column PenalidadID
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c4cc3b4-4bb3-582b-9bf9-1629882dccde
+		summarizeBy: none
+		sourceColumn: PenalidadID
+
+	column AlquilerID
+		dataType: int64
+		formatString: 0
+		lineageTag: 23cd8708-6f99-53a7-a175-679c7cb788b4
+		summarizeBy: none
+		sourceColumn: AlquilerID
+
+	column FechaPenalidadKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: b1f21f67-26a6-5a9c-b3d7-9f9d56ff289c
+		summarizeBy: none
+		sourceColumn: FechaPenalidadKey
+
+	column ArticuloKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: ebdd9731-c0f8-57a0-8183-aa0d2faec56f
+		summarizeBy: none
+		sourceColumn: ArticuloKey
+
+	column ClienteKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 1e8d4699-4f51-5de5-8d7e-8a8e1abcd990
+		summarizeBy: none
+		sourceColumn: ClienteKey
+
+	column TrabajadorKey
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 827fc4fd-6bdd-51bb-959b-8e50203a0507
+		summarizeBy: none
+		sourceColumn: TrabajadorKey
+
+	column TipoPenalidad
+		dataType: string
+		lineageTag: 18df6090-e6d1-5fe5-8b1c-0f12d651a46f
+		summarizeBy: none
+		sourceColumn: TipoPenalidad
+
+	column DiasRetrasoPenalidad
+		dataType: int64
+		formatString: 0
+		lineageTag: 61cf6840-2e5a-55ee-97c0-b9eb48d9fbc1
+		summarizeBy: none
+		sourceColumn: DiasRetrasoPenalidad
+
+	column MontoPenalidad
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 9be7bc50-9b2c-5aa1-998c-5eec89646ca6
+		summarizeBy: none
+		sourceColumn: MontoPenalidad
+
+	column EstadoPenalidad
+		dataType: string
+		lineageTag: 3d5f4451-c7be-5657-902c-0e325ad2c69a
+		summarizeBy: none
+		sourceColumn: EstadoPenalidad
+
+	partition FactPenalidad = m
+		mode: import
+		source =
+				let
+				    Origen = Sql.Database("localhost", "ModaEstilo_BI_Demo"),
+				    Vista = Origen{[Schema="bi", Item="FactPenalidad"]}[Data],
+				    Columnas = Table.SelectColumns(Vista, {"PenalidadID", "AlquilerID", "FechaPenalidadKey", "ArticuloKey", "ClienteKey", "TrabajadorKey", "TipoPenalidad", "DiasRetrasoPenalidad", "MontoPenalidad", "EstadoPenalidad"})
+				in
+				    Columnas

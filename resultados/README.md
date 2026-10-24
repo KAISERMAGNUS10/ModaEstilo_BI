@@ -1,5 +1,8 @@
 # Resultados y pruebas
 
-Carpeta reservada para las salidas de consultas y los registros de pruebas de la solución BI.
+| Archivo | Descripción |
+| --- | --- |
+| `Resultados_Q1_Q5_SQLServer.txt` | Salida de `database/02_Consultas_Validacion_BI.sql` en SQL Server. |
+| `Verificacion_PowerBI_vs_SQL.txt` | Salida de las consultas DAX de `powerbi/Verificacion_Modelo.dax` sobre el modelo cargado. |
 
-Actualmente contiene únicamente este README. Los resultados incorporados identificarán su versión, filtros, fecha y responsable, distinguiendo los valores esperados de los observados durante una ejecución.
+Cada archivo indica fecha, servidor y versión de la ejecución.

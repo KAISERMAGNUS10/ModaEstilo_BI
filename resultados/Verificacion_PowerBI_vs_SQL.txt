@@ -1,0 +1,63 @@
+﻿Verificacion del modelo de Power BI contra SQL Server
+Ejecucion: 2026-10-23 20:34:12 -05:00 | Power BI Desktop 2.159.883.0 (64 bits) | Modelo: powerbi/ModaEstilo_BI (modo Import, origen localhost / ModaEstilo_BI_Demo)
+Consultas DAX ejecutadas sobre el modelo cargado (motor local de Power BI Desktop). Comparar con resultados/Resultados_Q1_Q5_SQLServer.txt.
+Columnas separadas por " | ".
+### [DimFecha] | [DimArticulo] | [DimTrabajador] | [DimCliente] | [FactVenta] | [FactAlquiler] | [FactPenalidad] | [FactGasto] | [FactPago]
+1096 | 46 | 7 | 90 | 323 | 378 | 102 | 137 | 566
+### [Ingreso Total] | [Ingreso Ventas] | [Ingreso Alquileres] | [Operaciones] | [Ticket] | [Gastos] | [Cobros] | [Penalidades] | [NPen]
+136915.7 | 92784.7 | 44131 | 425 | 322.1546 | 37635 | 140326.14 | 6080 | 102
+### [NVentas] | [Unid] | [TicketV] | [Margen] | [PctMargen] | [StockCrit] | [Stock]
+185 | 360 | 501.5389 | 47069.7 | 0.50730023376699 | 0 | 504
+### [NAlq] | [Pend] | [Dev] | [Tasa] | [Retraso] | [PctRetraso]
+240 | 10 | 230 | 0.958333333333333 | 53 | 0.230434782608696
+### DimArticulo[Categoria] | [Ventas] | [Alquileres]
+Ternos | 28086 | 16734.25
+Vestidos | 15321.5 | 16348.75
+Camisas | 4428 | 158
+Blazers y sacos | 6977.75 | 1438.75
+Pantalones | 7307.75 | 163
+Accesorios | 3652.95 | 123
+Calzado | 9454 | 1319.75
+Trajes infantiles | 3980.25 | 3389
+Conjuntos femeninos | 13576.5 | 4456.5
+### DimFecha[Anio] | [Ventas] | [Alquileres] | [NV] | [NA]
+2024 | 30605.75 | 11545 | 60 | 70
+2025 | 34270.25 | 17175.5 | 70 | 88
+2026 | 27908.7 | 15410.5 | 55 | 82
+### DimArticulo[Articulo] | [U] | [Top]
+Terno ejecutivo | 13 | 
+Terno de ceremonia | 14 | 14
+Cinturón formal | 13 | 
+Conjunto sastre dos piezas | 16 | 16
+Vestido de gala satinado | 15 | 15
+Tacón de fiesta | 21 | 21
+Corbata de seda | 24 | 24
+Terno clásico slim | 16 | 16
+Camisa Oxford premium | 17 | 17
+Camisa cuello italiano | 22 | 22
+Set de gemelos | 17 | 17
+Pantalón sastre dama | 28 | 28
+### DimFecha[Anio] | FactPenalidad[TipoPenalidad] | [Monto]
+2024 | Mora | 875
+2025 | Mora | 950
+2026 | Mora | 500
+2024 | Limpieza | 360
+2025 | Limpieza | 405
+2026 | Limpieza | 315
+2024 | Reparación | 570
+2025 | Reparación | 1350
+2026 | Reparación | 755
+### FactPago[MetodoPago] | [Cobros]
+Efectivo | 28039.1
+Plin | 20383.45
+Tarjeta | 37469.67
+Yape | 44033.73
+Transferencia | 10400.19
+### FactAlquiler[TipoEvento] | [N]
+Fiesta de gala | 36
+Matrimonio | 75
+Quinceañero | 20
+Graduación | 43
+Sesión fotográfica | 17
+Evento corporativo | 31
+Ceremonia familiar | 18

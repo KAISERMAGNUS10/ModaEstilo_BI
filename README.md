@@ -6,32 +6,38 @@ Proyecto académico de Inteligencia de Negocios para analizar las ventas y los a
 
 - Repositorio: [KAISERMAGNUS10/ModaEstilo_BI](https://github.com/KAISERMAGNUS10/ModaEstilo_BI).
 - Rama principal: `main`.
-- Estado: estructura inicial de carpetas y documentación.
+- Estado: solución BI implementada (base de demostración, vistas del modelo estrella, consultas de validación y proyecto de Power BI).
 
 ## Organización
 
-| Carpeta | Contenido previsto |
+| Carpeta | Contenido |
 | --- | --- |
-| [database](database/) | Script de la base de demostración, vistas y consultas de validación. |
-| [powerbi](powerbi/) | Modelo de Power BI y medidas DAX. |
-| [resultados](resultados/) | Salidas de consultas y registros de pruebas. |
-| [evidencias](evidencias/) | Manifiesto y evidencias del proyecto. Las capturas del capítulo 5 se organizarán en `evidencias/capitulo5/`. |
-| [docs](docs/) | Modelo de datos, diccionario y guía de reproducción. |
+| [database](database/) | `01_ModaEstilo_BI_Demo.sql` (base, datos sintéticos y vistas `bi`) y `02_Consultas_Validacion_BI.sql` (consultas Q1–Q5). |
+| [powerbi](powerbi/) | Proyecto de Power BI `ModaEstilo_BI.pbip`, medidas DAX (`Medidas_DAX.dax`) y consultas DAX de verificación. |
+| [resultados](resultados/) | Salidas de las consultas Q1–Q5 en SQL Server y de la verificación del modelo de Power BI. |
+| [evidencias](evidencias/) | Capturas del capítulo 5 (`evidencias/capitulo5/`). |
+| [docs](docs/) | Modelo de datos y guía de reproducción. |
 
-Por ahora se incluyen únicamente archivos README.md. Los scripts, el modelo, las capturas y los resultados se incorporarán progresivamente. Esta estructura no acredita una ejecución de SQL Server ni la validación de un dashboard.
+## Requisitos
 
-## Reproducibilidad
+- SQL Server 2022 o superior (probado en SQL Server 2025 Standard Developer Edition 17.0.1000.7) con autenticación de Windows.
+- SQL Server Management Studio o `sqlcmd`.
+- Power BI Desktop (probado en la versión 2.159.883.0, 64 bits).
 
-El flujo previsto comprende preparar la base de demostración, validar conteos e importes, importar las vistas en Power BI, configurar relaciones y medidas y conciliar los indicadores con SQL Server.
+## Reproducción
 
-Al incorporar cada componente se documentarán sus requisitos, versiones, dependencias y pasos de ejecución. Los controles esperados se distinguirán de los resultados observados.
+1. Ejecutar `database/01_ModaEstilo_BI_Demo.sql` en una instancia de pruebas. Crea la base `ModaEstilo_BI_Demo`, carga los datos sintéticos (2024–2026, importes en PEN), valida los totales y crea las vistas del esquema `bi`. No modifica `ModaEstilo_Final`.
+2. Ejecutar `database/02_Consultas_Validacion_BI.sql` y comparar con `resultados/Resultados_Q1_Q5_SQLServer.txt`.
+3. Abrir `powerbi/ModaEstilo_BI.pbip` (o `powerbi/ModaEstilo_BI.pbix`) en Power BI Desktop y pulsar **Actualizar**. El origen es `localhost` / `ModaEstilo_BI_Demo`; si la instancia tiene otro nombre, cambiarlo en **Transformar datos > Configuración de origen de datos**.
+4. Comparar las tarjetas con los resultados de Q1–Q5 o ejecutar `powerbi/Verificacion_Modelo.dax`.
 
-## Control de versiones
+## Modelo de Power BI
 
-Los cambios se registran mediante commits de Git. Para cada entrega del informe se identificará la rama, el hash completo del commit, su fecha y su mensaje. Las evidencias se vincularán a la revisión evaluada mediante enlaces permanentes.
+- 9 tablas importadas desde las vistas `bi`: DimFecha, DimArticulo, DimTrabajador, DimCliente (solo clave y distrito), FactVenta, FactAlquiler, FactPenalidad, FactGasto y FactPago.
+- 16 relaciones de muchos a uno, filtro en una dirección.
+- 23 medidas DAX.
+- Dashboard de 3 páginas: Resumen general, Ventas y artículos, y Alquileres y penalidades.
 
 ## Datos y condiciones de uso
 
-La fuente de demostración prevista es `ModaEstilo_BI_Demo`, con datos sintéticos e importes en soles peruanos (PEN). Cada resultado deberá identificar su fuente, versión, filtros, fecha y responsable.
-
-Las capturas compartidas omitirán credenciales y datos personales innecesarios. Las condiciones de uso y las licencias aplicables se documentarán al incorporar código y conjuntos de datos.
+La fuente es `ModaEstilo_BI_Demo`, con datos sintéticos e importes en soles peruanos (PEN). El modelo de Power BI no importa DNI, nombres, teléfonos, correos ni direcciones de clientes.
