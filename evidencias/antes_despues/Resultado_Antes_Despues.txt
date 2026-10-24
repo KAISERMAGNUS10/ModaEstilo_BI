@@ -1,0 +1,43 @@
+﻿Evidencia E-12: antes y despues de las mejoras M-01 y M-02
+Modelo: powerbi/ModaEstilo_BI (Power BI Desktop 2.159.883.0) | Consultas: evidencias/antes_despues/Antes_Despues_Medidas.dax
+Cada consulta ejecuta la version ANTES y la version DESPUES de la medida sobre el mismo modelo cargado. Columnas separadas por " | ".
+
+// M-01. Devoluciones con Retraso (SQL Server, Q4: 53)
+### [Retraso ANTES (=)] | [% ANTES] | [Retraso DESPUES (==)] | [% DESPUES] | [Alquileres sin devolver]
+63 | 0.273913043478261 | 53 | 0.230434782608696 | 10
+
+// M-02. Cantidad de articulos que muestra el grafico Top 10
+### [Articulos mostrados ANTES] | [Articulos mostrados DESPUES]
+14 | 10
+
+// M-02. Detalle por articulo (en blanco = no se muestra en el grafico)
+### DimArticulo[Articulo] | [Unidades] | [Top10 ANTES] | [Top10 DESPUES]
+Pantalón sastre dama | 28 | 28 | 28
+Corbata de seda | 24 | 24 | 24
+Camisa cuello italiano | 22 | 22 | 22
+Tacón de fiesta | 21 | 21 | 21
+Set de gemelos | 17 | 17 | 17
+Camisa Oxford premium | 17 | 17 | 17
+Terno clásico slim | 16 | 16 | 16
+Conjunto sastre dos piezas | 16 | 16 | 16
+Vestido de gala satinado | 15 | 15 | 15
+Terno de ceremonia | 14 | 14 | 14
+Terno ejecutivo | 13 | 13 | 
+Cinturón formal | 13 | 13 | 
+Pajarita satinada | 12 | 12 | 
+Pantalón de vestir slim | 12 | 12 | 
+Zapato Oxford cuero | 11 |  | 
+Vestido de coctel | 11 |  | 
+Conjunto blazer y falda | 11 |  | 
+Blazer de lino | 11 |  | 
+Terno infantil ceremonia | 10 |  | 
+Zapato Derby | 10 |  | 
+Vestido infantil tul | 9 |  | 
+Saco juvenil entallado | 9 |  | 
+Conjunto blazer y pantalón | 8 |  | 
+Terno tres piezas | 8 |  | 
+Vestido largo plisado | 7 |  | 
+Pantalón de vestir clásico | 5 |  | 
+Saco cruzado elegante | 4 |  | 
+Pañuelo de bolsillo | 3 |  | 
+Vestido madrina | 3 |  | 

@@ -1,0 +1,47 @@
+// Evidencia E-12 (sección 5.5): antes y después de las mejoras M-01 y M-02 del modelo ModaEstilo_BI.
+// Cada consulta define la versión ANTES (original) y DESPUES (corregida) de la medida y las ejecuta
+// sobre el mismo modelo cargado. Resultados en Resultado_Antes_Despues.txt.
+
+// M-01. Devoluciones con Retraso: "=" contaba los blancos como 0; "==" no.
+DEFINE
+    MEASURE FactAlquiler[Retraso ANTES] = CALCULATE([Número de Alquileres], FactAlquiler[FuePuntual] = 0)
+    MEASURE FactAlquiler[Retraso DESPUES] = CALCULATE([Número de Alquileres], FactAlquiler[FuePuntual] == 0)
+EVALUATE
+ROW(
+    "Retraso ANTES (=)", [Retraso ANTES],
+    "% ANTES", DIVIDE([Retraso ANTES], [Alquileres Devueltos]),
+    "Retraso DESPUES (==)", [Retraso DESPUES],
+    "% DESPUES", DIVIDE([Retraso DESPUES], [Alquileres Devueltos]),
+    "Alquileres sin devolver", CALCULATE([Número de Alquileres], ISBLANK(FactAlquiler[FuePuntual]))
+)
+-- NEXT
+// M-02. Top 10 de artículos: RANKX con empates mostraba más de 10; TOPN con desempate muestra 10.
+DEFINE
+    MEASURE FactVenta[Top10 ANTES] =
+        IF(ISINSCOPE(DimArticulo[Articulo]),
+           IF(RANKX(ALLSELECTED(DimArticulo[Articulo]), [Unidades Vendidas], , DESC, Dense) <= 10, [Unidades Vendidas]),
+           [Unidades Vendidas])
+    MEASURE FactVenta[Top10 DESPUES] =
+        IF(ISINSCOPE(DimArticulo[Articulo]),
+           IF(SELECTEDVALUE(DimArticulo[Articulo]) IN TOPN(10, ALLSELECTED(DimArticulo[Articulo]), [Unidades Vendidas], DESC, DimArticulo[Articulo], ASC),
+              [Unidades Vendidas]),
+           [Unidades Vendidas])
+EVALUATE
+ROW(
+    "Articulos mostrados ANTES", COUNTROWS(FILTER(SUMMARIZECOLUMNS(DimArticulo[Articulo], "v", [Top10 ANTES]), NOT ISBLANK([v]))),
+    "Articulos mostrados DESPUES", COUNTROWS(FILTER(SUMMARIZECOLUMNS(DimArticulo[Articulo], "v", [Top10 DESPUES]), NOT ISBLANK([v])))
+)
+-- NEXT
+DEFINE
+    MEASURE FactVenta[Top10 ANTES] =
+        IF(ISINSCOPE(DimArticulo[Articulo]),
+           IF(RANKX(ALLSELECTED(DimArticulo[Articulo]), [Unidades Vendidas], , DESC, Dense) <= 10, [Unidades Vendidas]),
+           [Unidades Vendidas])
+    MEASURE FactVenta[Top10 DESPUES] =
+        IF(ISINSCOPE(DimArticulo[Articulo]),
+           IF(SELECTEDVALUE(DimArticulo[Articulo]) IN TOPN(10, ALLSELECTED(DimArticulo[Articulo]), [Unidades Vendidas], DESC, DimArticulo[Articulo], ASC),
+              [Unidades Vendidas]),
+           [Unidades Vendidas])
+EVALUATE
+SUMMARIZECOLUMNS(DimArticulo[Articulo], "Unidades", [Unidades Vendidas], "Top10 ANTES", [Top10 ANTES], "Top10 DESPUES", [Top10 DESPUES])
+ORDER BY [Unidades] DESC
