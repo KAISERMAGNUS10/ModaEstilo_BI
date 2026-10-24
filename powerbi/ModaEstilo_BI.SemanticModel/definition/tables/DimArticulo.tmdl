@@ -13,8 +13,8 @@ table DimArticulo
 
 	column ArticuloKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 3f336b40-9340-5980-9dbe-3d62e60b45fe
 		summarizeBy: none
 		sourceColumn: ArticuloKey
@@ -86,3 +86,4 @@ table DimArticulo
 				    Columnas = Table.SelectColumns(Vista, {"ArticuloKey", "Codigo", "Articulo", "Categoria", "Talla", "Color", "PrecioListaVenta", "PrecioListaAlquiler", "StockActual", "StockMinimo"})
 				in
 				    Columnas
+

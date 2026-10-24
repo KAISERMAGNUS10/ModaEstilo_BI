@@ -61,3 +61,4 @@ relationship 64b16e63-ad94-58dd-920e-77def68ebbfd
 relationship 3ecf1c9d-d92d-5bb5-a592-3c397d804fe3
 	fromColumn: FactPago.TrabajadorKey
 	toColumn: DimTrabajador.TrabajadorKey
+

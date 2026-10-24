@@ -3,8 +3,8 @@ table DimCliente
 
 	column ClienteKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 920eb42c-d92e-5a06-8d60-71cb72a591f9
 		summarizeBy: none
 		sourceColumn: ClienteKey
@@ -24,3 +24,4 @@ table DimCliente
 				    Columnas = Table.SelectColumns(Vista, {"ClienteKey", "Distrito"})
 				in
 				    Columnas
+

@@ -27,32 +27,32 @@ table FactPenalidad
 
 	column FechaPenalidadKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: b1f21f67-26a6-5a9c-b3d7-9f9d56ff289c
 		summarizeBy: none
 		sourceColumn: FechaPenalidadKey
 
 	column ArticuloKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: ebdd9731-c0f8-57a0-8183-aa0d2faec56f
 		summarizeBy: none
 		sourceColumn: ArticuloKey
 
 	column ClienteKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 1e8d4699-4f51-5de5-8d7e-8a8e1abcd990
 		summarizeBy: none
 		sourceColumn: ClienteKey
 
 	column TrabajadorKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 827fc4fd-6bdd-51bb-959b-8e50203a0507
 		summarizeBy: none
 		sourceColumn: TrabajadorKey
@@ -92,3 +92,4 @@ table FactPenalidad
 				    Columnas = Table.SelectColumns(Vista, {"PenalidadID", "AlquilerID", "FechaPenalidadKey", "ArticuloKey", "ClienteKey", "TrabajadorKey", "TipoPenalidad", "DiasRetrasoPenalidad", "MontoPenalidad", "EstadoPenalidad"})
 				in
 				    Columnas
+

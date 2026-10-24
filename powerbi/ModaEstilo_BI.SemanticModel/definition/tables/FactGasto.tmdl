@@ -15,8 +15,8 @@ table FactGasto
 
 	column FechaGastoKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 0c2019d0-21d8-5612-b848-d3ec3ce54659
 		summarizeBy: none
 		sourceColumn: FechaGastoKey
@@ -43,3 +43,4 @@ table FactGasto
 				    Columnas = Table.SelectColumns(Vista, {"GastoID", "FechaGastoKey", "TipoGasto", "MontoGasto"})
 				in
 				    Columnas
+

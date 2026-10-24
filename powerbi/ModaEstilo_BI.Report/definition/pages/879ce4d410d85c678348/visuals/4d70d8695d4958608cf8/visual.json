@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "4d70d8695d4958608cf8",
   "position": {
     "x": 916,
     "y": 8,
     "z": 4000,
-    "width": 168,
     "height": 66,
+    "width": 168,
     "tabOrder": 4000
   },
   "visual": {
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "DimFecha.MesNombre",
-              "nativeQueryRef": "MesNombre"
+              "nativeQueryRef": "MesNombre",
+              "active": true
             }
           ]
         }

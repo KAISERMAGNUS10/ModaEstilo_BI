@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "ModaEstilo_BI"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "878458bb-33d2-4d01-8d8b-e24458346de0"
+  }
+}

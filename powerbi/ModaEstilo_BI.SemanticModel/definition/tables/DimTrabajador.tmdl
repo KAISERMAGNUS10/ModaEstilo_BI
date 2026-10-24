@@ -3,8 +3,8 @@ table DimTrabajador
 
 	column TrabajadorKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 481be4a6-fb8b-566d-b7df-b75b80d0a7f5
 		summarizeBy: none
 		sourceColumn: TrabajadorKey
@@ -30,3 +30,4 @@ table DimTrabajador
 				    Columnas = Table.SelectColumns(Vista, {"TrabajadorKey", "Trabajador", "Cargo"})
 				in
 				    Columnas
+

@@ -3,8 +3,8 @@ table DimFecha
 
 	column FechaKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 6668ebd8-48e3-5622-b077-21501bb051d4
 		summarizeBy: none
 		sourceColumn: FechaKey
@@ -32,8 +32,8 @@ table DimFecha
 
 	column MesNumero
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 499004dc-acce-52f5-99ce-217176f4bdce
 		summarizeBy: none
 		sourceColumn: MesNumero
@@ -60,3 +60,4 @@ table DimFecha
 				    Columnas = Table.SelectColumns(Vista, {"FechaKey", "Fecha", "Anio", "Trimestre", "MesNumero", "MesNombre", "AnioMes"})
 				in
 				    Columnas
+

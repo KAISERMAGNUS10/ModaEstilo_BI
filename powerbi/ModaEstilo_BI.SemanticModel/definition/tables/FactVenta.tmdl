@@ -53,8 +53,8 @@ table FactVenta
 
 	column DetalleVentaKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 603692a3-3b40-5518-ad22-b6d9a5d956ff
 		summarizeBy: none
 		sourceColumn: DetalleVentaKey
@@ -68,32 +68,32 @@ table FactVenta
 
 	column FechaVentaKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: c54ed7d3-bc5c-5970-9df2-06db8f958c6e
 		summarizeBy: none
 		sourceColumn: FechaVentaKey
 
 	column ArticuloKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 7015e489-750e-5c80-a3d5-e761db933200
 		summarizeBy: none
 		sourceColumn: ArticuloKey
 
 	column ClienteKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: f1a8a0fa-1bca-5901-af2d-033861a6c6a7
 		summarizeBy: none
 		sourceColumn: ClienteKey
 
 	column TrabajadorKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 71f27fdb-9a91-5073-b6bb-3f3d73b46806
 		summarizeBy: none
 		sourceColumn: TrabajadorKey
@@ -160,3 +160,4 @@ table FactVenta
 				    Columnas = Table.SelectColumns(Vista, {"DetalleVentaKey", "VentaID", "FechaVentaKey", "ArticuloKey", "ClienteKey", "TrabajadorKey", "CanalVenta", "Comprobante", "EstadoVenta", "Cantidad", "PrecioUnitario", "ImporteVenta", "CostoMercaderia", "MargenBrutoVenta"})
 				in
 				    Columnas
+

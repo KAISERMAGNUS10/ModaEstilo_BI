@@ -15,24 +15,24 @@ table FactPago
 
 	column FechaPagoKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 8599b97b-8029-53c7-80d4-6b93e9ac872f
 		summarizeBy: none
 		sourceColumn: FechaPagoKey
 
 	column ClienteKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 888e07d6-cbd0-55d7-aff2-abb72612f494
 		summarizeBy: none
 		sourceColumn: ClienteKey
 
 	column TrabajadorKey
 		dataType: int64
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 9d8209ab-dda3-5354-8773-986c5d4ff2dd
 		summarizeBy: none
 		sourceColumn: TrabajadorKey
@@ -71,3 +71,4 @@ table FactPago
 				    Columnas = Table.SelectColumns(Vista, {"PagoID", "FechaPagoKey", "ClienteKey", "TrabajadorKey", "TipoOperacion", "MetodoPago", "MontoPago", "EstadoPago"})
 				in
 				    Columnas
+

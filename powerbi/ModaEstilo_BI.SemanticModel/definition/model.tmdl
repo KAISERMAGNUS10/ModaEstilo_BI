@@ -8,6 +8,8 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
+annotation PBI_ProTooling = ["DevMode"]
+
 ref table DimFecha
 ref table DimArticulo
 ref table DimTrabajador
@@ -17,3 +19,4 @@ ref table FactAlquiler
 ref table FactPenalidad
 ref table FactGasto
 ref table FactPago
+

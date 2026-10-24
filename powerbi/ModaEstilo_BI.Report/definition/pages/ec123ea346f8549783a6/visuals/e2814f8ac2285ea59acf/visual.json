@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "e2814f8ac2285ea59acf",
   "position": {
     "x": 736,
     "y": 8,
     "z": 3000,
-    "width": 168,
     "height": 66,
+    "width": 168,
     "tabOrder": 3000
   },
   "visual": {
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "DimFecha.Anio",
-              "nativeQueryRef": "Anio"
+              "nativeQueryRef": "Anio",
+              "active": true
             }
           ]
         }
